@@ -20,9 +20,8 @@ echo_color() {
 }
 
 setup() {
-	echo_color "Setting up"
-	podman rm -a
-	buildah rm -a
+	podman rm -a 2>&1 1>/dev/null
+	buildah rm -a 2>&1 1>/dev/null
 }
 
 intro() {
@@ -32,7 +31,7 @@ intro() {
 
 demo_one() {
 	echo
-	echo_color "Let's start with building from a Containerfile which is similar to a Dockerfile"
+	echo_color "Demo #1: Let's start with building from a Containerfile which is similar to a Dockerfile"
 	echo
 	read_color "vim Containerfile"
 	vim Containerfile
@@ -44,10 +43,33 @@ demo_one() {
 	podman build -t ubi-containerfile .
 
 	echo
-	echo_color "Look at the new image that's built:"
+	echo_color "Inspect the new image:"
 	echo
 	read_color "podman images | grep ubi-containerfile"
 	podman images | grep ubi-containerfile
+
+	echo
+	echo_color "Now, run the new image:"
+	echo
+	read_color "podman run -it ubi-containerfile"
+	podman run -it ubi-containerfile
+
+}
+
+demo_two() {
+	echo
+	echo_color "Demo #2: Let's demonstrate how to build an image from UBI Minimal"
+	echo
+	read_color "buildah from registry.access.redhat.com/ubi8/ubi-micro"
+	buildah from registry.access.redhat.com/ubi8/ubi-micro
+
+	echo
+	echo_color "The output of **buildah from** gives us a reference to work with. From here, we can mount the filesystem of the new container:"
+	echo
+	read_color "buildah mount ubi-micro-working-container"
+	BMOUNT=`buildah mount ubi-micro-working-container`
+	echo $BMOUNT
+
 
 }
 
@@ -73,10 +95,9 @@ clean_images_and_containers() {
 
 setup
 intro
-demo_one
+#demo_one
+demo_two
 clean_images_and_containers
 
 echo
-read -p "End of Demo!!!"
-echo
-echo "Thank you!"
+echo "End of demo, thank you!"
