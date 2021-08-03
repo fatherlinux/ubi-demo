@@ -6,7 +6,7 @@ To run this demo, simply:
 ```
 git clone https://github.com/fatherlinux/ubi-demo.git
 cd ubi-demo
-./start.sh
+buildah unshare ./start.sh
 ```
 
 
