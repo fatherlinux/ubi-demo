@@ -60,6 +60,8 @@ demo_two() {
 	echo
 	echo_color "Demo #2: Let's demonstrate how to build an image from UBI Minimal"
 	echo
+	echo_color "Create a container from the UBI Micro image:"
+	echo
 	read_color "buildah from registry.access.redhat.com/ubi8/ubi-micro"
 	buildah from registry.access.redhat.com/ubi8/ubi-micro
 
@@ -69,6 +71,38 @@ demo_two() {
 	read_color "buildah mount ubi-micro-working-container"
 	BMOUNT=`buildah mount ubi-micro-working-container`
 	echo $BMOUNT
+
+	echo
+	echo_color "Now, install the iputils package in the mounted filesytem:"
+	echo
+	read_color "yum install --installroot $BMOUNT --releasever 8 --setopt install_weak_deps=false --nodocs -y iputils"
+	yum install --installroot $BMOUNT --releasever 8 --setopt install_weak_deps=false --nodocs -y openssl
+
+	echo
+	echo_color "Clean up the YUM/DNF cache:"
+	echo
+	read_color "yum clean all --installroot $BMOUNT"
+	yum clean all --installroot $BMOUNT
+
+	echo
+	echo_color "Unmount the filesystem:"
+	echo
+	read_color "buildah unmount ubi-micro-working-container"
+	buildah unmount ubi-micro-working-container
+
+	echo
+	echo_color "Commit the working Buildah container as a new container image:"
+	echo
+	read_color "buildah commit ubi-micro-working-container ubi-micro-openssl"
+	buildah commit ubi-micro-working-container ubi-micro-openssl
+
+	echo
+	echo_color "Inspect the new image:"
+	echo
+	read_color "buildah images | grep ubi-micro-openssl"
+	buildah images | grep ubi-micro-openssl
+
+
 
 
 }
@@ -95,7 +129,7 @@ clean_images_and_containers() {
 
 setup
 intro
-#demo_one
+demo_one
 demo_two
 clean_images_and_containers
 
