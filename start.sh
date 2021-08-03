@@ -75,7 +75,7 @@ demo_two() {
 	echo
 	echo_color "Now, install the iputils package in the mounted filesytem:"
 	echo
-	read_color "yum install --installroot $BMOUNT --releasever 8 --setopt install_weak_deps=false --nodocs -y iputils"
+	read_color "yum install --installroot $BMOUNT --releasever 8 --setopt install_weak_deps=false --nodocs -y openssl"
 	yum install --installroot $BMOUNT --releasever 8 --setopt install_weak_deps=false --nodocs -y openssl
 
 	echo
