@@ -102,11 +102,16 @@ demo_two() {
 	read_color "buildah images | grep ubi-micro-openssl"
 	buildah images | grep ubi-micro-openssl
 
-
-
-
 }
 
+demo_three() {
+	echo
+	echo_color "Now, let's take a look at the new images up on DockerHub"
+	echo
+	read_color "curl https://hub.docker.com/u/redhat"
+	curl https://hub.docker.com/u/redhat
+
+}
 pause() {
     echo
     read -p "Enter to continue"
@@ -131,6 +136,7 @@ setup
 intro
 demo_one
 demo_two
+demo_three
 clean_images_and_containers
 
 echo
