@@ -62,8 +62,8 @@ demo_two() {
 	echo
 	echo_color "Create a container from the UBI Micro image:"
 	echo
-	read_color "buildah from registry.access.redhat.com/ubi8/ubi-micro"
-	buildah from registry.access.redhat.com/ubi8/ubi-micro
+	read_color "buildah from registry.access.redhat.com/ubi9-beta/ubi-micro"
+	buildah from registry.access.redhat.com/ubi9-beta/ubi-micro
 
 	echo
 	echo_color "The output of **buildah from** gives us a reference to work with. From here, we can mount the filesystem of the new container:"
@@ -75,8 +75,8 @@ demo_two() {
 	echo
 	echo_color "Now, install the iputils package in the mounted filesytem:"
 	echo
-	read_color "yum install --installroot $BMOUNT --releasever 8 --setopt install_weak_deps=false --nodocs -y openssl"
-	yum install --installroot $BMOUNT --releasever 8 --setopt install_weak_deps=false --nodocs -y openssl
+	read_color "yum install --installroot $BMOUNT --releasever 9 --setopt install_weak_deps=false --nodocs -y openssl"
+	yum install --installroot $BMOUNT --releasever 9 --setopt install_weak_deps=false --nodocs -y openssl
 
 	echo
 	echo_color "Clean up the YUM/DNF cache:"
@@ -136,7 +136,7 @@ setup
 intro
 demo_one
 demo_two
-demo_three
+#demo_three
 clean_images_and_containers
 
 echo
